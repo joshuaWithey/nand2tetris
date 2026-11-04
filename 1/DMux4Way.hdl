@@ -15,31 +15,8 @@ CHIP DMux4Way {
     PARTS:
     DMux(in = in, sel = sel[0], a=tempA, b=tempB);
     DMux(in = in, sel = sel[0], a=tempC, b=tempD);
-    // 00, tempA = in, tempB = 0, tempC = in, tempD = 0
-    // 01, tempA = 0, tempB = in, tempC = 0, tempD = in
-    // 10, tempA = in, tempB = 0, tempC = in, tempD = 0
-    // 11, tempA = 0, tempB = in, tempC = 0, tempD = in
-    // E.g. 00. We then need to set tempC to 0
-    // Since sel[1] == 0, set c to 0
-    // If tempA is in but sel[1] == 1, set a to 0
-    // Set a to 0 if sel[1] is not zero
-    DMux(in = in, sel = sel[1], a=a, b=c);
-    DMux(in = in, sel = sel[1], a=b, b=d);
-    //And(a=tempA, b=tempC, out=
-    //DMux(in=in, sel=sel[1], a=a, b=c);
-    //DMux(in=in, sel=sel[1], a=b, b=d);
-    // 00, tempA = in, tempB = 0, tempC = 0, tempD = 0
-    // 01, tempA = 0, tempB = in, tempC = 0, tempD = in
-    // 10, tempA = in, tempB = 0, tempC = in, tempD = 0
-    // 11, tempA = 0, tempB = in, tempC = 0, tempD = in
+    Mux(a=tempA, b=false, sel=sel[1], out=a);
+    Mux(a=tempB, b=false, sel=sel[1], out=b);
+    Mux(a=false, b=tempC, sel=sel[1], out=c);
+    Mux(a=false, b=tempD, sel=sel[1], out=d);
 }
-
-//CHIP DMux {
-    //IN in, sel;
-    //OUT a, b;
-
-    //PARTS:
-    //Not(in=sel, out=notSel);
-    //And(a=notSel, b=in, out=a);
-    //And(a=sel, b=in, out=b);
-//}, 
