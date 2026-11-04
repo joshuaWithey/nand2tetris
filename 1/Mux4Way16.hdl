@@ -11,7 +11,11 @@
 CHIP Mux4Way16 {
     IN a[16], b[16], c[16], d[16], sel[2];
     OUT out[16];
-    
     PARTS:
-    //// Replace this comment with your code.
+    // Combine a + b
+    Mux16(a=a, b=b, sel=sel[0], out=aMuxB);
+    //Combine c + d
+    Mux16(a=c, b=d, sel=sel[0], out=cMuxD);
+    // Combine into output
+    Mux16(a=aMuxB, b=cMuxD, sel=sel[1], out=out);
 }
